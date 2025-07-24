@@ -1,0 +1,9 @@
+{
+  "app.articles": "Articles",
+  "app.movies": "Films",
+  "title.login": "Connexion",
+  "btn.login": "Connexion",
+  "email.login": "Email",
+  "password.login": "Mot de passe",
+  "error.occur": "Une erreur s'est produite"
+}

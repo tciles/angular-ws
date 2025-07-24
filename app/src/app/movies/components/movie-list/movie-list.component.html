@@ -1,17 +1,15 @@
-
 <div class="uk-container uk-margin-small-top uk-margin-large-bottom">
 
   @if (status() === NetworkStatus.ERROR) {
     <div class="uk-alert-danger" uk-alert>
-      <a href class="uk-alert-close" uk-close></a>
-      <p>Erreur lors de la récupération des films.</p>
+      <p>{{ "error.occur"|translate }}</p>
     </div>
   }
 
-  <h1>Films</h1>
+  <h1>{{ "app.movies"|translate }}</h1>
 
   <div class="uk-child-width-1 uk-child-width-1-2@s uk-child-width-1-3@m uk-grid-small uk-grid-match uk-grid movies">
-    @for(movie of movies(); track movie) {
+    @for (movie of movies(); track movie) {
       <app-movie-item [movie]="movie"/>
     }
   </div>

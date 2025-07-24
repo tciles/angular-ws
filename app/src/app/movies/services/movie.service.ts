@@ -1,7 +1,7 @@
-import { Observable, map, delay } from 'rxjs';
-import { Injectable, inject } from "@angular/core";
-import { HttpClient } from "@angular/common/http";
-import { BASE_API_URL } from '../../app.config';
+import {delay, map, Observable} from 'rxjs';
+import {inject, Injectable} from "@angular/core";
+import {HttpClient} from "@angular/common/http";
+import {BASE_API_URL} from '../../app.config';
 import {Movie} from '../types/movie.type';
 import {ApiResponse} from '../types/apiResponse.type';
 

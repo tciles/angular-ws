@@ -1,4 +1,4 @@
-import {computed, effect, inject, Injectable, signal} from "@angular/core";
+import {computed, inject, Injectable, signal} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import {BASE_API_URL} from '../../app.config';
 import {map, Observable} from 'rxjs';
@@ -31,28 +31,7 @@ export class AuthService {
   loginError = computed(() => this.#authState().logginError);
   token = computed(() => this.#authState().token);
 
-  constructor() {
-    effect(() => {
-      const authState: AuthState = {
-        token: "",
-        logginError: false,
-      }
-
-      try {
-        const token = localStorage.getItem(AuthService.STORAGE_KEY) || "";
-
-        if (token) {
-          authState.token = token;
-        }
-      } catch (error) {
-        authState.logginError = true;
-      }
-
-      this.#authState.set(authState);
-    });
-  }
-
-  login(payload: LoginPayload): Observable<AuthState> {
+  login(payload: LoginPayload): Observable<void> {
     return this.http.post<ApiResponse<string>>(`${this.baseUrl}/login`, payload)
       .pipe(map((response) => {
         let code = response.code || 400;
@@ -61,22 +40,15 @@ export class AuthService {
           code = Number.parseInt(code);
         }
 
-        const authState: AuthState = {
-          token: "",
-          logginError: false,
-        };
-
         if (code === 200 && code < 300) {
-          authState.token = response.data;
-          localStorage.setItem(AuthService.STORAGE_KEY, authState.token);
-          this.#authState.set(authState);
+          localStorage.setItem(AuthService.STORAGE_KEY, response.data);
+          this.#authState.set({logginError: false, token: response.data});
 
-          return authState;
+          return;
         }
 
-        authState.logginError = true;
         localStorage.removeItem(AuthService.STORAGE_KEY);
-        this.#authState.set(authState);
+        this.#authState.set({logginError: true, token: ""});
 
         throw new Error();
       }));
@@ -84,12 +56,27 @@ export class AuthService {
 
   logout() {
     localStorage.removeItem(AuthService.STORAGE_KEY);
+    this.#authState.set({logginError: false, token: ""});
+  }
 
-    this.#authState.update((state) => {
-      state.token = "";
-      state.logginError = false;
+  authenticate() {
+    console.log("authenticate")
 
-      return state;
-    })
+    const authState: AuthState = {
+      token: "",
+      logginError: false,
+    }
+
+    try {
+      const token = localStorage.getItem(AuthService.STORAGE_KEY) || "";
+
+      if (token) {
+        authState.token = token;
+      }
+    } catch (error) {
+      authState.logginError = true;
+    }
+
+    this.#authState.set(authState);
   }
 }

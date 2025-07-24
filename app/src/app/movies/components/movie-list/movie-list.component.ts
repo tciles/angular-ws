@@ -1,7 +1,8 @@
-import { Component, inject, signal, WritableSignal, OnInit } from '@angular/core';
-import { Movie } from '../../types/movie.type';
-import { MovieService } from '../../services/movie.service';
-import { MovieItemComponent } from '../movie-item/movie-item.component';
+import {Component, inject, OnInit, signal, WritableSignal} from '@angular/core';
+import {Movie} from '../../types/movie.type';
+import {MovieService} from '../../services/movie.service';
+import {MovieItemComponent} from '../movie-item/movie-item.component';
+import {TranslatePipe} from '@ngx-translate/core';
 
 declare const UIkit: any;
 
@@ -17,13 +18,18 @@ enum NetworkStatus {
   templateUrl: './movie-list.component.html',
   styleUrls: ['./movie-list.component.scss'],
   imports: [
-    MovieItemComponent
+    MovieItemComponent,
+    TranslatePipe
   ]
 })
 export class MoviesListComponent implements OnInit {
   movies: WritableSignal<Movie[]> = signal<Movie[]>([]);
   status: WritableSignal<NetworkStatus> = signal<NetworkStatus>(NetworkStatus.NONE);
   apiService: MovieService = inject(MovieService);
+
+  constructor() {
+    console.log('MoviesListComponent');
+  }
 
   ngOnInit() {
     this.status.set(NetworkStatus.PENDING);

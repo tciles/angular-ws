@@ -1,5 +1,5 @@
-import { Component, input, InputSignal } from "@angular/core";
-import { Movie } from '../../types/movie.type';
+import {Component, input, InputSignal} from "@angular/core";
+import {Movie} from '../../types/movie.type';
 import {MovieRatingComponent} from '../movie-rating/movie-rating.component';
 
 @Component({

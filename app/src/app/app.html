@@ -1,37 +1,60 @@
 <!--HEADER-->
-<header class="uk-box-shadow-small uk-section-secondary eni-header">
-    <div class="uk-container uk-container-expand">
-        <nav class="uk-navbar" id="navbar" data-uk-navbar>
-            <div class="uk-navbar-center">
-                <a class="uk-navbar-item uk-logo" href="#">ENI Movie</a>
-            </div>
-        </nav>
+<nav class="uk-navbar-container ">
+  <div class="uk-section-secondary">
+
+  <div class="uk-container">
+    <div uk-navbar>
+
+      <div class="uk-navbar-center">
+        <div class="uk-navbar-center-left">
+          <ul class="uk-navbar-nav">
+            @if (authService.token()) {
+              <li routerLinkActive="uk-active"><a routerLink="/movies" >{{  "app.movies"|translate }}</a></li>
+              <li routerLinkActive="uk-active"><a routerLink="/articles" >{{  "app.articles"|translate }}</a></li>
+              <li routerLinkActive="uk-active"><a routerLink="/logout" >{{  "app.logout"|translate }}</a></li>
+            }
+          </ul>
+        </div>
+        <a class="uk-navbar-item uk-logo" href="#">ENI Movie</a>
+        <div class="uk-navbar-center-right">
+          <ul class="uk-navbar-nav">
+            @for (local of ['fr', 'en']; track $index) {
+              <li [class.uk-active]="isActiveLocale(local)"><a (click)="setLocale(local)">{{ local }}</a></li>
+            }
+          </ul>
+        </div>
+
+      </div>
+
     </div>
-</header>
+  </div>
+</div>
+
+</nav>
 <!--/HEADER-->
 
-<router-outlet />
+<router-outlet/>
 
 <!--FOOTER-->
 <footer class="uk-section-secondary">
-    <div class="uk-container uk-section">
-        <div class="uk-grid uk-child-width-1-3@l" data-uk-grid>
-            <div>
-                <h4>Social Media</h4>
-                <a href="" class="uk-icon-button  uk-margin-small-right" data-uk-icon="facebook"></a>
-                <a href="" class="uk-icon-button  uk-margin-small-right" data-uk-icon="twitter"></a>
-                <a href="" class="uk-icon-button" data-uk-icon="instagram"></a>
-            </div>
-        </div>
+  <div class="uk-container uk-section">
+    <div class="uk-grid uk-child-width-1-3@l" data-uk-grid>
+      <div>
+        <h4>Social Media</h4>
+        <a href="" class="uk-icon-button  uk-margin-small-right" data-uk-icon="facebook"></a>
+        <a href="" class="uk-icon-button  uk-margin-small-right" data-uk-icon="twitter"></a>
+        <a href="" class="uk-icon-button" data-uk-icon="instagram"></a>
+      </div>
     </div>
-    <div class="uk-section uk-section-xsmall" style="background-color: rgba(0,0,0,0.15)">
-        <div class="uk-container">
-            <div class="uk-grid uk-child-width-1-2@s uk-text-center uk-text-left@s" data-uk-grid>
-                <div class="uk-text-small uk-text-muted">
-                    Copyright 2025 - All rights reserved.
-                </div>
-            </div>
+  </div>
+  <div class="uk-section uk-section-xsmall" style="background-color: rgba(0,0,0,0.15)">
+    <div class="uk-container">
+      <div class="uk-grid uk-child-width-1-2@s uk-text-center uk-text-left@s" data-uk-grid>
+        <div class="uk-text-small uk-text-muted">
+          Copyright 2025 - All rights reserved.
         </div>
+      </div>
     </div>
+  </div>
 </footer>
 <!--/FOOTER-->
