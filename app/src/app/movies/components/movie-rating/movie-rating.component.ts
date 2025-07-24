@@ -19,7 +19,7 @@ export class MovieRatingComponent {
     const decimalPart = rating - Math.floor(rating);
 
     if (i > rating) {
-      return i-1 <= rating && decimalPart ? "fa-solid fa-star-half-stroke" : "fa-regular fa-star";
+      return (i - 1) <= rating && decimalPart ? "fa-solid fa-star-half-stroke" : "fa-regular fa-star";
     }
 
     return "fa fa-star";
